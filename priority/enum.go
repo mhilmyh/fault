@@ -14,7 +14,7 @@ const (
 func (l Enum) String() string {
 	switch l {
 	default:
-		return ""
+		return "unknown"
 	case None:
 		return "none"
 	case Low:
@@ -31,9 +31,13 @@ func (l Enum) Int() int {
 }
 
 func (l Enum) Valid() bool {
-	return l >= None && l <= High
+	return l >= Low && l <= High
 }
 
 func (l Enum) Label() string {
 	return "P" + strconv.Itoa(l.Int())
+}
+
+func (l Enum) Empty() bool {
+	return l == None
 }

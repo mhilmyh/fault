@@ -5,7 +5,8 @@ import "strconv"
 type Enum int
 
 const (
-	Safe Enum = iota
+	None Enum = iota
+	Safe
 	Trivial
 	Minor
 	Major
@@ -14,7 +15,9 @@ const (
 func (l Enum) String() string {
 	switch l {
 	default:
-		return ""
+		return "unknown"
+	case None:
+		return "none"
 	case Safe:
 		return "safe"
 	case Trivial:
@@ -36,4 +39,8 @@ func (l Enum) Valid() bool {
 
 func (l Enum) Label() string {
 	return "S" + strconv.Itoa(l.Int())
+}
+
+func (l Enum) Empty() bool {
+	return l == None
 }

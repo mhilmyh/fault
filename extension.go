@@ -9,14 +9,24 @@ import (
 
 type Extension func(e *object)
 
-func WithContext(ctx context.Context) Extension {
+func WithContext(ctx context.Context, replace bool) Extension {
 	return func(e *object) {
 		if value, ok := GetContext(ctx); ok {
-			e.scope = value.scope
-			e.fun = value.fun
-			e.loc = value.loc
-			e.priority = value.priority
-			e.severity = value.severity
+			if replace || e.scope == "" {
+				e.scope = value.scope
+			}
+			if replace || e.fun == "" {
+				e.fun = value.fun
+			}
+			if replace || e.loc == "" {
+				e.loc = value.loc
+			}
+			if replace || e.priority == nil || e.priority.Empty() {
+				e.priority = value.priority
+			}
+			if replace || e.severity == nil || e.severity.Empty() {
+				e.severity = value.severity
+			}
 		}
 	}
 }

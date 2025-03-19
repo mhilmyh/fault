@@ -62,9 +62,15 @@ func (cv *contextValue) Function() string {
 }
 
 func (cv *contextValue) Priority() Level {
+	if cv.priority == nil {
+		return priority.None
+	}
 	return cv.priority
 }
 
 func (cv *contextValue) Severity() Level {
+	if cv.severity == nil {
+		return severity.None
+	}
 	return cv.severity
 }

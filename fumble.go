@@ -26,6 +26,7 @@ type Level interface {
 	Int() int
 	Valid() bool
 	Label() string
+	Empty() bool
 }
 
 type object struct {
@@ -39,10 +40,10 @@ type object struct {
 }
 
 func New(ctx context.Context, msg string, extensions ...Extension) Error {
-	return Raw(msg, WithContext(ctx), extensions...)
+	return Raw(msg, append(extensions, WithContext(ctx, true)))
 }
 
-func Raw(msg string, extensions ...Extension) Error {
+func Raw(msg string, extensions []Extension) Error {
 	result := &object{msg: msg}
 	for _, extension := range extensions {
 		extension(result)
