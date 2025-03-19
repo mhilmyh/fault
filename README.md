@@ -1,9 +1,3 @@
-## TODO
-- Implement errors.* function in Error interface
-- Add WithError() extension
-- Support nested error
-- Add support for JSON (marshal,unmarshal, etc)
-
 ## Severity and priority concept
 The concepts of severity and priority are often used in error handling, issue tracking, and incident management, but they refer to different aspects of an issue. Understanding the difference between these two terms is important for effectively managing and addressing problems in software or systems.
 

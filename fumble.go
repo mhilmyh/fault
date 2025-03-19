@@ -96,6 +96,11 @@ func (o *object) Error() string {
 		sb.WriteString(o.Message())
 	}
 
+	if o.Parent() != nil {
+		sb.WriteString(" => ")
+		sb.WriteString(o.Parent().Error())
+	}
+
 	return sb.String()
 }
 
