@@ -24,7 +24,7 @@ type contextValue struct {
 func InitContext(ctx context.Context, scope string, args ...any) context.Context {
 	var (
 		prio  Level = priority.None
-		sever Level = severity.Safe
+		sever Level = severity.None
 	)
 	for _, arg := range args {
 		switch x := arg.(type) {
