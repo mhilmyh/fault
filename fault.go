@@ -122,7 +122,7 @@ func (o *object) Location() string {
 
 func (o *object) Severity() Level {
 	if o.severity == nil {
-		return severity.Safe
+		return severity.None
 	}
 	return o.severity
 }
