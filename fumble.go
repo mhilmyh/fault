@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mhilmyh/fumble/priority"
-	"github.com/mhilmyh/fumble/severity"
+	"github.com/mhilmyh/fault/priority"
+	"github.com/mhilmyh/fault/severity"
 )
 
 type Error interface {
