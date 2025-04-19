@@ -1,19 +1,19 @@
-package fumble
+package fault
 
 import (
 	"context"
 
-	"github.com/mhilmyh/fumble/priority"
-	"github.com/mhilmyh/fumble/severity"
+	"github.com/mhilmyh/fault/priority"
+	"github.com/mhilmyh/fault/severity"
 )
 
 type Key string
 
 const (
-	ContextKey Key = "fumble.ContextKey"
+	ContextKey Key = "fault.ContextKey"
 )
 
-type contextValue struct {
+type ContextValue struct {
 	scope    string
 	loc      string
 	fun      string
@@ -35,7 +35,7 @@ func InitContext(ctx context.Context, scope string, args ...any) context.Context
 		}
 	}
 	loc, fun := getCaller(1)
-	return context.WithValue(ctx, ContextKey, contextValue{
+	return context.WithValue(ctx, ContextKey, ContextValue{
 		scope:    scope,
 		loc:      loc,
 		fun:      fun,
@@ -44,31 +44,31 @@ func InitContext(ctx context.Context, scope string, args ...any) context.Context
 	})
 }
 
-func GetContext(ctx context.Context) (contextValue, bool) {
-	value, exist := ctx.Value(ContextKey).(contextValue)
+func GetContext(ctx context.Context) (ContextValue, bool) {
+	value, exist := ctx.Value(ContextKey).(ContextValue)
 	return value, exist
 }
 
-func (cv *contextValue) Scope() string {
+func (cv *ContextValue) Scope() string {
 	return cv.scope
 }
 
-func (cv *contextValue) Location() string {
+func (cv *ContextValue) Location() string {
 	return cv.loc
 }
 
-func (cv *contextValue) Function() string {
+func (cv *ContextValue) Function() string {
 	return cv.fun
 }
 
-func (cv *contextValue) Priority() Level {
+func (cv *ContextValue) Priority() Level {
 	if cv.priority == nil {
 		return priority.None
 	}
 	return cv.priority
 }
 
-func (cv *contextValue) Severity() Level {
+func (cv *ContextValue) Severity() Level {
 	if cv.severity == nil {
 		return severity.None
 	}
