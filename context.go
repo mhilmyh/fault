@@ -7,13 +7,13 @@ import (
 	"github.com/mhilmyh/fault/severity"
 )
 
-type Key string
+type contextKey string
 
 const (
-	ContextKey Key = "fault.ContextKey"
+	Key contextKey = "fault.ContextKey"
 )
 
-type ContextValue struct {
+type Value struct {
 	scope    string
 	loc      string
 	fun      string
@@ -21,7 +21,7 @@ type ContextValue struct {
 	severity Level
 }
 
-func InitContext(ctx context.Context, scope string, args ...any) context.Context {
+func Init(ctx context.Context, scope string, args ...any) context.Context {
 	var (
 		prio  Level = priority.None
 		sever Level = severity.None
@@ -35,7 +35,7 @@ func InitContext(ctx context.Context, scope string, args ...any) context.Context
 		}
 	}
 	loc, fun := getCaller(1)
-	return context.WithValue(ctx, ContextKey, ContextValue{
+	return context.WithValue(ctx, Key, Value{
 		scope:    scope,
 		loc:      loc,
 		fun:      fun,
@@ -44,31 +44,31 @@ func InitContext(ctx context.Context, scope string, args ...any) context.Context
 	})
 }
 
-func GetContext(ctx context.Context) (ContextValue, bool) {
-	value, exist := ctx.Value(ContextKey).(ContextValue)
+func GetContext(ctx context.Context) (Value, bool) {
+	value, exist := ctx.Value(Key).(Value)
 	return value, exist
 }
 
-func (cv *ContextValue) Scope() string {
+func (cv *Value) Scope() string {
 	return cv.scope
 }
 
-func (cv *ContextValue) Location() string {
+func (cv *Value) Location() string {
 	return cv.loc
 }
 
-func (cv *ContextValue) Function() string {
+func (cv *Value) Function() string {
 	return cv.fun
 }
 
-func (cv *ContextValue) Priority() Level {
+func (cv *Value) Priority() Level {
 	if cv.priority == nil {
 		return priority.None
 	}
 	return cv.priority
 }
 
-func (cv *ContextValue) Severity() Level {
+func (cv *Value) Severity() Level {
 	if cv.severity == nil {
 		return severity.None
 	}
